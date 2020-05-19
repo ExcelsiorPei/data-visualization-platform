@@ -5,7 +5,8 @@ html{
 body{
     margin: 0px;
 }
-header{
+
+#header{
     height: 10%;
     width: 100%;
     display: flex;
@@ -14,19 +15,19 @@ header{
     color: white;
     font-size: 20px;
     }
-header #website_name{
+#header #website_name{
     margin-left: 20px;
     font-size: 30px;
     font-style: italic;
 }
-header #navigator{
+#header #navigator{
     margin-left: auto;
 }
-header #navigator ul{
+#header #navigator ul{
     height: 100%;
     display: flex;
 }
-header #navigator ul li{
+#header #navigator ul li{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,14 +35,13 @@ header #navigator ul li{
     list-style: none;
     width: 150px;
 }
-a{
+#header a{
     color: white;
-    display: block;
     text-decoration: none;
     text-align: center;
     padding: 20px 40px;
 }
-a:hover{
+#header a:hover{
     color: rgb(255, 187, 0);
 }
 #viewDiv{
@@ -54,5 +54,5 @@ header nav a.here:visited,
 header nav a.here:hover,
 header nav a.here:active{
     color: rgb(255, 187, 0);
-    
 }
+

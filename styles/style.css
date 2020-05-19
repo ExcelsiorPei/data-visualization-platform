@@ -1,0 +1,58 @@
+html{
+    height: 100%;
+    width: 100%;
+}
+body{
+    margin: 0px;
+}
+header{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: rgb(12, 12, 112);
+    color: white;
+    font-size: 20px;
+    }
+header #website_name{
+    margin-left: 20px;
+    font-size: 30px;
+    font-style: italic;
+}
+header #navigator{
+    margin-left: auto;
+}
+header #navigator ul{
+    height: 100%;
+    display: flex;
+}
+header #navigator ul li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    list-style: none;
+    width: 150px;
+}
+a{
+    color: white;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 20px 40px;
+}
+a:hover{
+    color: rgb(255, 187, 0);
+}
+#viewDiv{
+        height: 90%;
+        width: 100%;
+    }
+
+header nav a.here:link,
+header nav a.here:visited,
+header nav a.here:hover,
+header nav a.here:active{
+    color: rgb(255, 187, 0);
+    
+}

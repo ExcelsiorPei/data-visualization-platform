@@ -7,8 +7,9 @@ require([
         "esri/widgets/Feature",
         "esri/widgets/Legend",
         "esri/widgets/Expand",
-        "esri/widgets/Fullscreen"
-    ], function(Map, MapView,BasemapToggle,FeatureLayer,Feature,Legend,Expand,Fullscreen) {
+        "esri/widgets/Fullscreen",
+        "esri/widgets/Measurement"
+    ], function(Map, MapView,BasemapToggle,FeatureLayer,Feature,Legend,Expand,Fullscreen,Measurement) {
     //添加底图
         var map = new Map({
             basemap: "topo-vector"
@@ -42,6 +43,12 @@ require([
         view:view
         });
         view.ui.add(fullscreen, "bottom-right");
+        //添加测距控件
+        var measurement = new Measurement({
+            view:view,
+            activeTool:"distance"
+        });
+        view.ui.add(measurement, "top-left");
         //添加数据渲染器  
         var pointRenderer={
             type:"simple",

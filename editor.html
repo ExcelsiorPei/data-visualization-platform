@@ -1,0 +1,52 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ArcGIS JavaScript Tutorials: Create a Starter App</title>
+  
+
+  <!-- 添加对css和api的引用 -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <link rel="stylesheet" href="styles/style_editor.css" type="text/css">
+
+</head>
+<body>
+  <header id="header">
+    <div id="website_name">
+      Sampling Data Visualization Platform
+    </div>
+    <div id="navigator">
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="editor.html">Editor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div id="viewDiv"></div>
+  <div id="toolbarDiv" class="esri-component esri-widget">
+    <button
+      id="distance"
+      class="esri-widget--button esri-interactive esri-icon-measure-line"
+      title="Distance Measurement Tool"
+    ></button>
+    <button
+        id="area"
+        class="esri-widget--button esri-interactive esri-icon-measure-area"
+        title="Area Measurement Tool"
+      ></button>
+    <button
+      id="clear"
+      class="esri-widget--button esri-interactive esri-icon-trash"
+      title="Clear Measurements"
+    ></button>
+  </div>
+  <div id="info">
+    <p>点击图中采样点以获取采样信息</p>
+  </div>
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <script src="scripts/script_editor.js"></script>
+</body>
+</html>

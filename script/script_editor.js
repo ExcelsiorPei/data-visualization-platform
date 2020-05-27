@@ -1,169 +1,208 @@
 require([
     //加载模块
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/widgets/BasemapToggle",
-        "esri/layers/FeatureLayer",
-        "esri/widgets/Feature",
-        "esri/widgets/Legend",
-        "esri/widgets/Expand",
-        "esri/widgets/Fullscreen",
-        "esri/widgets/Measurement"
-    ], function(Map, MapView,BasemapToggle,FeatureLayer,Feature,Legend,Expand,Fullscreen,Measurement) {
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/widgets/BasemapToggle",
+    "esri/layers/FeatureLayer",
+    "esri/widgets/Feature",
+    "esri/widgets/Legend",
+    "esri/widgets/Expand",
+    "esri/widgets/Fullscreen",
+    "esri/widgets/Measurement",
+    "esri/widgets/Editor"
+], function (Map, MapView, BasemapToggle, FeatureLayer, Feature, Legend, Expand, Fullscreen, Measurement) {
     //添加底图
-        var map = new Map({
-            basemap: "topo-vector"
-        });
+    var map = new Map({
+        basemap: "topo-vector"
+    });
     //添加地图视图
-        var view = new MapView({
-            container: "viewDiv",
-            map: map,
-            center: [108.95000,34.1],
-            zoom: 10
-        });
-      //添加地图切换toggle控件
-        var toggle = new BasemapToggle({
-            view:view,
-            nextBasemap:"hybrid"
-        });
-        view.ui.add(toggle,"top-right");
-        //添加图例
-        var legend = new Legend({
-            view:view,
-            container:"legendDiv"
-        });
-        //添加expand控件，用于放置图例
-        var legendExpand = new Expand({
-            view:view,
-            content:legend
-        });
-        view.ui.add(legendExpand,"bottom-right");
-        //添加全屏控件
-        var fullscreen = new Fullscreen({
-        view:view
-        });
-        view.ui.add(fullscreen, "bottom-right");
-        //添加测距控件:测距、测面积
-        var measurement = new Measurement();
-        measurement.view = view;
-        view.ui.add(measurement, "bottom-left");
-        var distanceButton = document.getElementById("distance");
-        var areaButton = document.getElementById("area");
-        var clearButton = document.getElementById("clear");
-            //测距
-        function distanceMeasurement(){
-            measurement.activeTool = "distance";
-            distanceButton.classList.add("active");
-            areaButton.classList.remove("active");
-        }
-        distanceButton.addEventListener("click",function(){
-            distanceMeasurement();
-        })
-            //测面积
-        function areaMeasurement(){
-            measurement.activeTool = "area";
-            areaButton.classList.add("active");
-            distanceButton.classList.remove("active");
-        }
-        areaButton.addEventListener("click", function(){
-            areaMeasurement();
-        })
-            //清除测量控件
-        function clearMeasurement(){
-            distanceButton.classList.remove("active");
-            areaButton.classList.remove("active");
-            measurement.clear();
-        }
-        clearButton.addEventListener("click", function(){
-            clearMeasurement();
-        })
-        //添加数据渲染器  
-        var pointRenderer={
-            type:"simple",
-            symbol:{
-                type:"simple-marker",
-                color:[255,0,255],
-                outline:{
-                    color:"#00FFFF"
-                }
+    var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [108.95000, 34.2],
+        zoom: 10
+    });
+    //添加地图切换toggle控件
+    var toggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybrid"
+    });
+    view.ui.add(toggle, "top-right");
+    //添加图例
+    var legend = new Legend({
+        view: view,
+        container: "legendDiv"
+    });
+    //添加expand控件，用于放置图例
+    var legendExpand = new Expand({
+        view: view,
+        content: legend
+    });
+    view.ui.add(legendExpand, "bottom-right");
+    //添加全屏控件
+    var fullscreen = new Fullscreen({
+        view: view
+    });
+    view.ui.add(fullscreen, "bottom-right");
+    //添加测距控件:测距、测面积
+    var measurement = new Measurement();
+    measurement.view = view;
+    view.ui.add(measurement, "bottom-left");
+    var distanceButton = document.getElementById("distance");
+    var areaButton = document.getElementById("area");
+    var clearButton = document.getElementById("clear");
+    //测距
+    function distanceMeasurement() {
+        measurement.activeTool = "distance";
+        distanceButton.classList.add("active");
+        areaButton.classList.remove("active");
+    }
+    distanceButton.addEventListener("click", function () {
+        distanceMeasurement();
+    })
+    //测面积
+    function areaMeasurement() {
+        measurement.activeTool = "area";
+        areaButton.classList.add("active");
+        distanceButton.classList.remove("active");
+    }
+    areaButton.addEventListener("click", function () {
+        areaMeasurement();
+    })
+    //清除测量控件
+    function clearMeasurement() {
+        distanceButton.classList.remove("active");
+        areaButton.classList.remove("active");
+        measurement.clear();
+    }
+    clearButton.addEventListener("click", function () {
+        clearMeasurement();
+    })
+
+
+
+    //添加数据渲染器  
+    var pointRenderer = {
+        type: "simple",
+        symbol: {
+            type: "simple-marker",
+            color: [255, 0, 255],
+            outline: {
+                color: "#00FFFF"
             }
         }
-        //添加弹出窗口
-        var popupTables = {
-            content: [{
-            title:"{地点}",
-            type:"fields",
-            fieldInfos:[
+    }
+    //根据调色盘颜色设置渲染器颜色
+    var box1 = document.getElementById("box1");
+    var box2 = document.getElementById("box2");
+    var box3 = document.getElementById("box3");
+    var R = document.getElementById("R");
+    var G = document.getElementById("G");
+    var B = document.getElementById("B");
+    var r = 0, g = 0, b = 0;
+    var tsb = document.getElementById("tsb");
+    var button = document.getElementById("tsb_button");
+    tsb.style.background = "rgb(" + r + "," + g + "," + b + ")";
+    box1.oninput = function () {
+        R.innerText = box1.value;
+        r = box1.value;
+        tsb.style.background = "rgb(" + r + "," + g + "," + b + ")";
+    }
+    box2.oninput = function () {
+        G.innerText = box2.value;
+        g = box2.value;
+        tsb.style.background = "rgb(" + r + "," + g + "," + b + ")";
+    }
+    box3.oninput = function () {
+        B.innerText = box3.value;
+        b = box3.value;
+        tsb.style.background = "rgb(" + r + "," + g + "," + b + ")";
+    }
+    function changeColor() {
+        pointRenderer.symbol.color = [r, g, b];
+        sample_point.renderer = pointRenderer;
+        map.remove();
+        map.add(sample_point);
+    }
+    button.addEventListener("click", function () {
+        changeColor();
+    })
+    //添加弹出窗口
+    var popupTables = {
+        content: [{
+            title: "{地点}",
+            type: "fields",
+            fieldInfos: [
                 {
-                fieldName:"地点",
-                label:"地点",
-                visible:true,
-                format: null,
-                stringFieldOption:"text-box"
+                    fieldName: "地点",
+                    label: "地点",
+                    visible: true,
+                    format: null,
+                    stringFieldOption: "text-box"
                 },
                 {
-                fieldName:"pH",
-                label:"pH",
-                visible:true,
-                format: {
-                    places:2,
-                    digitSeperator:true
-                },
-                stringFieldOption:"text-box"
-                },
-                {
-                fieldName:"ORP",
-                label:"ORP",
-                visible:true,
-                format: {
-                    places:2,
-                    digitSeperator:true
-                },
-                stringFieldOption:"text-box"
+                    fieldName: "pH",
+                    label: "pH",
+                    visible: true,
+                    format: {
+                        places: 2,
+                        digitSeperator: true
+                    },
+                    stringFieldOption: "text-box"
                 },
                 {
-                fieldName:"EC",
-                label:"EC",
-                visible:true,
-                format: {
-                    places:2,
-                    digitSeperator:true
+                    fieldName: "ORP",
+                    label: "ORP",
+                    visible: true,
+                    format: {
+                        places: 2,
+                        digitSeperator: true
+                    },
+                    stringFieldOption: "text-box"
                 },
-                stringFieldOption:"text-box"
+                {
+                    fieldName: "EC",
+                    label: "EC",
+                    visible: true,
+                    format: {
+                        places: 2,
+                        digitSeperator: true
+                    },
+                    stringFieldOption: "text-box"
                 }
             ]
-            }]
-        }
-        //添加图层数据
-        var sample_point = new FeatureLayer({
-            url:"https://services5.arcgis.com/9KWvMv6plnDEz1Jd/arcgis/rest/services/chanba_sample/FeatureServer/0?token=CCxbC2bEvOqJVDZQnNsg_Oa_ue5ydyaojs0l8vV5G1XaJnrX3qIwXihtJb2SrcVU1kXhdSojIPtJPG4k2KP1MNTQBX_CIFu2q9LQ7zh8YAa2SSea-cADmSTqkwmR5GMj17YjST9ZOuDW7g1DwH2m0wci17s_dzmRGJOZchCZxJrbCPr9Y8prf2PxTYRsVML8YDrJNXoxOk8Ms6-AVizu3mhmOrQgaih-W5kKDi1P-IY.",
-            renderer:pointRenderer,
-            outFields:["地点","pH","ORP","EC"],
-            popupTemplate:popupTables
-        });
-        map.add(sample_point);
+        }]
+    }
+    //添加图层数据
+    var sample_point = new FeatureLayer({
+        url: "https://services5.arcgis.com/9KWvMv6plnDEz1Jd/arcgis/rest/services/chanba_sample/FeatureServer/0?token=CCxbC2bEvOqJVDZQnNsg_Oa_ue5ydyaojs0l8vV5G1XaJnrX3qIwXihtJb2SrcVU1kXhdSojIPtJPG4k2KP1MNTQBX_CIFu2q9LQ7zh8YAa2SSea-cADmSTqkwmR5GMj17YjST9ZOuDW7g1DwH2m0wci17s_dzmRGJOZchCZxJrbCPr9Y8prf2PxTYRsVML8YDrJNXoxOk8Ms6-AVizu3mhmOrQgaih-W5kKDi1P-IY.",
+        renderer: pointRenderer,
+        outFields: ["地点", "pH", "ORP", "EC"],
+        popupTemplate: popupTables
     });
+    map.add(sample_point);
+});
 
-function addLoadEvent(func){
+function addLoadEvent(func) {
     var oldonload = window.onload;
-    if (typeof window.onload != 'function'){
+    if (typeof window.onload != 'function') {
         window.onload = func;
     }
-    else{
-        window.onload = function(){
+    else {
+        window.onload = function () {
             oldonload();
             func();
         }
     }
 }
-function highlightPage(){
+function highlightPage() {
     var headers = document.getElementsByTagName('header');
     var navs = headers[0].getElementsByTagName('nav');
     var links = navs[0].getElementsByTagName('a');
     var linkurl;
-    for (var i=0; i<links.length; i++){
+    for (var i = 0; i < links.length; i++) {
         linkurl = links[i].getAttribute('href');
-        if (window.location.href.indexOf(linkurl) != -1){
+        if (window.location.href.indexOf(linkurl) != -1) {
             links[i].className = 'here';
         }
     }

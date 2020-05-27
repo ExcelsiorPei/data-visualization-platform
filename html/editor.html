@@ -1,1 +1,73 @@
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ArcGIS JavaScript Tutorials: Create a Starter App</title>
+
+
+  <!-- 添加对css和api的引用 -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <link rel="stylesheet" href="styles/style_editor.css" type="text/css">
+
+</head>
+
+<body>
+  <!-- 头部导航栏 -->
+  <header id="header">
+    <div id="website_name">
+      Sampling Data Visualization Platform
+    </div>
+    <div id="navigator">
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="editor.html">Editor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- 主体 -->
+  <section id="page_body" class="wrapper-flex">
+    <!-- 地图 -->
+    <div id="viewDiv" class="left"></div>
+    <!-- 侧栏 -->
+    <div id="sidebar" class="right">
+      <!-- 调色盘 -->
+      <div id="tsb_div">
+        <p>修改图标颜色</p>
+        <div id="tsb"></div>
+        <p>
+          <input type="range" min="0" max="255" value="0" id="box1" class="box">
+          <span id="R">0</span>
+        </p>
+        <p>
+          <input type="range" min="0" max="255" value="0" id="box2" class="box">
+          <span id="G">0</span>
+        </p>
+        <p>
+          <input type="range" min="0" max="255" value="0" id="box3" class="box">
+          <span id="B">0</span>
+        </p>
+        <button id="tsb_button">确定</button>
+      </div>
+    </div>
+  </section>
+  <!-- 测量工具条 -->
+  <div id="toolbarDiv" class="esri-component esri-widget">
+    <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line"
+      title="Distance Measurement Tool"></button>
+    <button id="area" class="esri-widget--button esri-interactive esri-icon-measure-area"
+      title="Area Measurement Tool"></button>
+    <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash" title="Clear Measurements"></button>
+  </div>
+  <!-- 弹窗提示信息条 -->
+  <div id="info">
+    <p>点击图中采样点以获取采样信息</p>
+  </div>
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <script src="scripts/script_editor.js"></script>
+</body>
+
+</html>
